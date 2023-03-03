@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "lib": ["DOM", "ESNext"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "NodeNext",
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
+    "outDir": "dist"
+  }
+}

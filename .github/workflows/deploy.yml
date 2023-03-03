@@ -1,0 +1,35 @@
+name: Deployment
+
+on:
+    push:
+        branches: [main]
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        permissions:
+          contents: read
+          packages: write 
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Setup Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+
+            - name: Install Dependencies
+              run: npm install
+
+            - name: Check
+              run: npm run check
+
+            - name: Build
+              run: npm run build
+
+            - name: Deploy
+              uses: JS-DevTools/npm-publish@v1
+              with:
+                  access: public
+                  token: ${{ secrets.NPM_TOKEN }}
