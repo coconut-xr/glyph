@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    visibility: hidden;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--b3) / var(--tw-bg-opacity));;
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@coconut-xr/glyph-examples",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "generate": "next build && next export"
+  },
+  "dependencies": {
+    "@coconut-xr/glyph": "file:..",
+    "@react-three/drei": "^9.57.3",
+    "@react-three/fiber": "^8.12.0",
+    "@tailwindcss/typography": "^0.5.7",
+    "daisyui": "^2.36.1",
+    "next": "^13.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "suspend-react": "^0.0.8"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.18",
+    "tailwindcss": "^3.2.1"
+  }
+}

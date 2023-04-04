@@ -15,7 +15,7 @@
     "url": "git@github.com:coconut-xr/glyph.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "check": "run-s check:prettier check:eslint",
     "check:prettier": "prettier --check src/**/*.{ts,tsx}",
     "check:eslint": "eslint src",
