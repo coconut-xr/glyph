@@ -13,6 +13,7 @@ import {
   loadFont,
   NowrapWrapper,
   BreakallWrapper,
+  WordWrapper,
 } from "@coconut-xr/glyph";
 import { useMemo, useState, Suspense, useRef } from "react";
 import { OrbitControls } from "@react-three/drei";
@@ -52,6 +53,7 @@ const wrapperMap = {
   //overflow: OverflowWrapper,
   breakall: BreakallWrapper,
   nowrap: NowrapWrapper,
+  word: WordWrapper
 };
 
 const wrapperKeys = Object.keys(wrapperMap);

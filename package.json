@@ -1,6 +1,6 @@
 {
   "name": "@coconut-xr/glyph",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "fast, efficient, and layout-ready text rendering for Three.js",
   "keywords": [
     "three.js",
@@ -17,10 +17,10 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "check": "run-s check:prettier check:eslint",
-    "check:prettier": "prettier --check src/**/*.{ts,tsx}",
+    "check:prettier": "prettier --check src/**/*.ts",
     "check:eslint": "eslint src",
     "fix": "run-s fix:prettier fix:eslint",
-    "fix:prettier": "prettier --write src/**/*.{ts,tsx}",
+    "fix:prettier": "prettier --write src/**/*.ts",
     "fix:eslint": "eslint src --fix"
   },
   "files": [

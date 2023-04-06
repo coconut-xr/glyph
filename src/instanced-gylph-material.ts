@@ -39,10 +39,11 @@ export class InstancedGlypthMaterial extends MeshBasicMaterial {
         `#include <map_fragment>
             vec2 dxdy = fwidth(fontUv) * pageSize;
             float dist = getDistance() + min(float(v_weight), 0.5 - 1.0 / float(distanceRange)) - 0.5;
-            diffuseColor.a *= clamp(dist * float(distanceRange) / length(dxdy) + 0.5, 0.0, 1.0);
-            if(diffuseColor.a <= 0.0001) {
+            float multiplier = clamp(dist * float(distanceRange) / length(dxdy) + 0.5, 0.0, 1.0);
+            if(multiplier <= 0.3) {
                 discard;
             }
+            diffuseColor.a *= multiplier;
             `,
       );
     };
