@@ -44,7 +44,7 @@ const fontUrlMap = {
   SourceSerifPro: "sourceserifpro.json",
   OpenSans: "opensans.json",
   Montserrat: "montserrat.json",
-  Quicksand: "quicksand.json"
+  Quicksand: "quicksand.json",
 };
 const fontKeys = Object.keys(fontUrlMap);
 
@@ -53,7 +53,7 @@ const wrapperMap = {
   //overflow: OverflowWrapper,
   breakall: BreakallWrapper,
   nowrap: NowrapWrapper,
-  word: WordWrapper
+  word: WordWrapper,
 };
 
 const wrapperKeys = Object.keys(wrapperMap);
@@ -297,6 +297,9 @@ function TextObject({
       new MeshBasicMaterial({ transparent: true, opacity: 0.15, side: DoubleSide }),
       4,
     );
+    //important for corrext ordering of the rectangles behind the text
+    //=> render order for transparent elements is based on the projected z coordinate of the world position of the object
+    mesh.position.set(0, 0, -0.01);
     mesh.setColorAt(0, new Color(1, 1, 1));
     mesh.setColorAt(1, new Color(1, 1, 1));
     mesh.setColorAt(2, new Color(1, 1, 1));
@@ -320,6 +323,7 @@ function TextObject({
 
   return (
     <group>
+      <primitive object={rectangles} />
       <primitive
         onPointerMove={(e: ThreeEvent<PointerEvent>) => {
           highlightIndicies.glyphIndex = e.instanceId ?? highlightIndicies.glyphIndex;
@@ -335,7 +339,6 @@ function TextObject({
         }}
         object={meshRef.current}
       />
-      <primitive object={rectangles} />
     </group>
   );
 }
