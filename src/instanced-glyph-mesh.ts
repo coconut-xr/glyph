@@ -8,6 +8,7 @@ import {
   Plane,
   PlaneGeometry,
   Raycaster,
+  Sphere,
   Usage,
   Vector2,
   Vector3,
@@ -154,16 +155,47 @@ export class InstancedGlypthMesh extends Mesh {
     this.instanceUV.setXYZW(index, x, y + height, width, -height);
   }
 
+  spherecast(sphere: Sphere, intersects: Intersection[]): void {
+    helperPlane.normal.set(0, 0, 1);
+    helperPlane.constant = 0;
+    helperPlane.applyMatrix4(this.matrixWorld);
+
+    helperPlane.projectPoint(sphere.center, globalVectorHelper);
+    const distanceToSphere = globalVectorHelper.distanceTo(sphere.center);
+    if (distanceToSphere > sphere.radius) {
+      return;
+    }
+
+    this.computeIntersects(globalVectorHelper, distanceToSphere, intersects);
+  }
+
   raycast(raycaster: Raycaster, intersects: Intersection[]): void {
     helperPlane.normal.set(0, 0, 1);
     helperPlane.constant = 0;
     helperPlane.applyMatrix4(this.matrixWorld);
 
-    raycaster.ray.intersectPlane(helperPlane, globalVectorHelper);
-    localVectorHelper.copy(globalVectorHelper);
+    if (raycaster.ray.intersectPlane(helperPlane, globalVectorHelper) == null) {
+      return;
+    }
+
+    this.computeIntersects(
+      globalVectorHelper,
+      raycaster.ray.distanceToPlane(helperPlane),
+      intersects,
+    );
+  }
+
+  private computeIntersects(
+    worldPointOnPlane: Vector3,
+    distanceToPlane: number,
+    intersects: Array<Intersection>,
+  ): void {
+    localVectorHelper.copy(worldPointOnPlane);
     this.worldToLocal(localVectorHelper);
 
     if (
+      isNaN(localVectorHelper.x) ||
+      isNaN(localVectorHelper.y) ||
       localVectorHelper.x < this.bounds.x ||
       localVectorHelper.x > this.bounds.x + this.bounds.width ||
       localVectorHelper.y > this.bounds.y ||
@@ -184,8 +216,8 @@ export class InstancedGlypthMesh extends Mesh {
 
     intersects.push({
       object: this,
-      distance: raycaster.ray.distanceToPlane(helperPlane),
-      point: globalVectorHelper.clone(),
+      distance: distanceToPlane,
+      point: worldPointOnPlane.clone(),
       faceIndex: lineIndex,
       instanceId: this.computeGlyphIndexFromX(lineIndex, localVectorHelper.x),
       uv: new Vector2(
