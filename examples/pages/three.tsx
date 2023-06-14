@@ -59,7 +59,7 @@ async function init(canvas: HTMLCanvasElement) {
   const textureLoader = new TextureLoader();
 
   const font = await loadFont(
-    "/",
+    "https://coconut-xr.github.io/msdf-fonts/",
     "roboto.json",
     textureLoader.loadAsync.bind(textureLoader),
   );

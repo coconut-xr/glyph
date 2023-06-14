@@ -1,4 +1,5 @@
 import {
+  Box3,
   DynamicDrawUsage,
   InstancedBufferAttribute,
   Intersection,
@@ -69,6 +70,9 @@ export function updateGlyphMesh(
     properties,
   );
 
+  mesh.bounds.toBoundingBox(mesh.boundingBox);
+  mesh.bounds.toBoundingSphere(mesh.boundingSphere);
+
   mesh.instanceMatrix.needsUpdate = true;
   mesh.instanceUV.needsUpdate = true;
 
@@ -79,6 +83,9 @@ export class InstancedGlypthMesh extends Mesh {
   public readonly isInstancedMesh = true;
 
   public readonly instanceColor = null;
+
+  public readonly boundingBox = new Box3();
+  public readonly boundingSphere = new Sphere();
 
   public count = 0;
   public lineHeight = 0;
@@ -106,10 +113,20 @@ export class InstancedGlypthMesh extends Mesh {
     this.count = source.count;
     this.lineHeight = source.lineHeight;
     this.bounds.copy(source.bounds);
+    this.boundingBox.copy(source.boundingBox);
+    this.boundingSphere.copy(source.boundingSphere);
     this.lineLastGlyphIndex.length = 0;
     this.lineLastGlyphIndex.push(...source.lineLastGlyphIndex);
 
     return this;
+  }
+
+  computeBoundingBox() {
+    //nothing to do here
+  }
+
+  computeBoundingSphere() {
+    //nothing to do here
   }
 
   getGlyphBounds(index: number, target: Bounds): void {

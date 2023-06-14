@@ -1,6 +1,6 @@
 {
   "name": "@coconut-xr/glyph",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "fast, efficient, and layout-ready text rendering for Three.js",
   "keywords": [
     "three.js",

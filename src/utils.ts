@@ -1,4 +1,4 @@
-import { Matrix4 } from "three";
+import { Box3, Matrix4, Sphere } from "three";
 import { GlyphProperties } from "./apply-glyph-builder.js";
 import { Font, GlyphInfo } from "./load-font.js";
 
@@ -62,6 +62,16 @@ export class Bounds {
     this.y = source.y;
     this.width = source.width;
     this.height = source.height;
+  }
+
+  toBoundingBox(box: Box3): void {
+    box.min.set(this.x, this.y - this.height, 0);
+    box.max.set(this.x + this.width, this.y, 0);
+  }
+
+  toBoundingSphere(sphere: Sphere): void {
+    sphere.radius = Math.sqrt(this.width ** 2 + this.height ** 2) / 2;
+    sphere.center.set(this.x + this.width / 2, this.y - this.height / 2, 0);
   }
 }
 
