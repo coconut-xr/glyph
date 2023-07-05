@@ -236,6 +236,13 @@ export class InstancedGlypthMesh extends Mesh {
       distance: distanceToPlane,
       point: worldPointOnPlane.clone(),
       faceIndex: lineIndex,
+      face: {
+        a: 0,
+        b: 0,
+        c: 0,
+        materialIndex: 0,
+        normal: new Vector3(0, 0, 1), //normal always in z-direction in local space
+      },
       instanceId: this.computeGlyphIndexFromX(lineIndex, localVectorHelper.x),
       uv: new Vector2(
         (localVectorHelper.x - this.bounds.x) / this.bounds.width,
